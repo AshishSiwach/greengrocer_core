@@ -1,0 +1,25 @@
+# --- Python ---
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+*.env
+
+# --- Data (NEVER COMMIT DATA) ---
+data/
+*.csv
+*.json
+*.parquet
+
+# --- dbt ---
+dbt_packages/
+target/
+logs/
+
+# --- IDE settings ---
+.vscode/
+.idea/
+
+# --- OS ---
+.DS_Store
+Thumbs.db
