@@ -1,0 +1,46 @@
+version: '3.8'
+
+services:
+  # --- Service 1: The Analytical Database ---
+  postgres:
+    image: postgres:16
+    container_name: greengrocer_db
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: adminpassword
+      POSTGRES_DB: greengrocer
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    # 🔧 TUNING 🔧
+    # We override the default config directly in the command.
+    # standard_conforming_strings=on: Better security.
+    # work_mem=16MB: Critical for sorting large datasets in memory (Analytics).
+    # shared_buffers=256MB: Gives Postgres more RAM (Default is tiny).
+    # random_page_cost=1.1: Tells query planner we have an SSD (faster seeks).
+    command: >
+      postgres 
+      -c standard_conforming_strings=on
+      -c shared_buffers=256MB 
+      -c effective_cache_size=1GB 
+      -c work_mem=16MB 
+      -c maintenance_work_mem=128MB 
+      -c wal_buffers=16MB 
+      -c random_page_cost=1.1 
+      -c effective_io_concurrency=200 
+
+  # --- Service 2: The Management UI ---
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: greengrocer_pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@greengrocer.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+    ports:
+      - "8080:80"
+    depends_on:
+      - postgres
+
+volumes:
+  postgres_data:
