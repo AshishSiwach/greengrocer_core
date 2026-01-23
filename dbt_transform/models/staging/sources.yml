@@ -1,0 +1,12 @@
+version: 2
+
+sources:
+  - name: greengrocer_raw
+    description: "Raw data landed from Python scripts"
+    database: greengrocer
+    schema: public
+    tables:
+      - name: raw_sales
+        description: "Raw transactions from the POS system (contains chaos)"
+      - name: raw_inventory
+        description: "Daily inventory snapshots"
