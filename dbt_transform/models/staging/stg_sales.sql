@@ -24,4 +24,4 @@ SELECT
     CAST(total_amount AS DECIMAL(10,2)) as total_amount
 
 FROM cleaned_data
-WHERE row_num = 1 -- <--- This filters out the duplicates!
+WHERE row_num = 1 -- <--- filters out the duplicates
