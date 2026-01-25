@@ -8,7 +8,7 @@ products AS (
 
 SELECT
     s.transaction_id,
-    s.sale_date,
+    s.transaction_at,
     s.store_id,
     s.product_id,
     p.product_name,
